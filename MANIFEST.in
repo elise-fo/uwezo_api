@@ -1,0 +1,3 @@
+graft uwezo_api
+global-exclude *.py[cod] __pycache__ *.so *.ipynb
+recursive-exclude  uwezo_api/jupy *
