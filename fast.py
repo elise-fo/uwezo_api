@@ -8,7 +8,7 @@ from urllib.request import urlopen
 
 app = FastAPI()
 
-data = pd.read_excel('data/mapping.xlsx', engine = 'openpyxl', sheet_name = 'Template')
+data = pd.read_excel('uwezo_api/data/mapping.xlsx', engine = 'openpyxl', sheet_name = 'Template')
 
 data = data.rename(columns=lambda x: x if not 'Unnamed' in str(x) else '')\
     .dropna(axis = 0, how = 'all').dropna(axis = 1, how = 'all')\
