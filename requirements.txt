@@ -13,3 +13,4 @@ fastapi
 numpy
 flask
 streamlit
+openpyxl
