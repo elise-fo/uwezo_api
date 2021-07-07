@@ -9,3 +9,8 @@ black
 yapf
 python-gitlab
 twine
+fastapi
+numpy
+json
+urllib
+
