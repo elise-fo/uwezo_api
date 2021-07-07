@@ -12,3 +12,4 @@ twine
 fastapi
 numpy
 flask
+streamlit
