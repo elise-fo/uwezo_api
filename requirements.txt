@@ -11,5 +11,4 @@ python-gitlab
 twine
 fastapi
 numpy
-urllib
 
