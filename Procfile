@@ -1,1 +1,1 @@
-web: sh setup.sh && streamlit run fast.py
+web: env FLASK_APP=fast.py flask run --host=0.0.0.0 --port $PORT
