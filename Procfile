@@ -1,1 +1,1 @@
-web: sh setup.sh && streamlit run fast.py
+web: sh setup.sh && streamlit run uwezo_api/fast.py
