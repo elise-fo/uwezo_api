@@ -1,5 +1,7 @@
 # write some code for the API here
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd 
 import numpy as np
 import json
@@ -8,6 +10,13 @@ from urllib.request import urlopen
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 data = pd.read_excel('uwezo_api/data/mapping.xlsx', engine = 'openpyxl', sheet_name = 'Template')
 
 data = data.rename(columns=lambda x: x if not 'Unnamed' in str(x) else '')\
@@ -62,6 +71,10 @@ def index():
 @app.get("/stakeholder/{stakeholder}/womenspecific/{womenspecific}/socialentrepreneurship/{socialentrepreneurship}")
 def predict_genre(stakeholder, womenspecific, socialentrepreneurship):
     # key = track_id spotify de la clé 
+    headers = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin':'http://127.0.0.1:5000/'
+    }
     stakeholders = ['Incubators, Accelerators & Hubs',
             'Professional Associations & Networks',
             'NGOs',
@@ -90,4 +103,4 @@ def predict_genre(stakeholder, womenspecific, socialentrepreneurship):
     ]
     data_dict = {'data':df.to_dict(orient = 'records')}
     # TO DO : appliquer une fonction qui sort les features 
-    return data_dict 
+    return JSONResponse(content = data_dict, headers = headers) 
