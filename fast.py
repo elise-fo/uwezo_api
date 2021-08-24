@@ -73,7 +73,7 @@ def predict_genre(stakeholder, womenspecific, socialentrepreneurship):
     # key = track_id spotify de la clé 
     headers = {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin':'http://127.0.0.1:5000/'
+        'Access-Control-Allow-Origin':'http://127.0.0.1:5000/, http://localhost:3000/'
     }
     stakeholders = ['Incubators, Accelerators & Hubs',
             'Professional Associations & Networks',
