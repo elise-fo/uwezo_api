@@ -56,7 +56,7 @@ data['socialMedias'] = pd.Series(map(lambda a,b,c,d,e:transform_in_dict(a,b,c,d,
                                           data['instagram']
                                     ))
 data = data.fillna('').astype('object')
-data = data[['location','_id','socialMedias','country','sectors','name','email','website','classification', 'womenSpecific', 'socialEntrepreneurSpecific', 'yearFounded', 'description', 'supportType', 'fundingType', 'innovationStages']]
+data = data[['location','_id','locationName','socialMedias','country','sectors','name','email','website','classification', 'womenSpecific', 'socialEntrepreneurSpecific', 'yearFounded', 'description', 'supportType', 'fundingType', 'innovationStages']]
 
 
 
