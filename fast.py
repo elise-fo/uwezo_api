@@ -1,4 +1,5 @@
 # write some code for the API here
+from pandas.core.indexing import maybe_convert_ix
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -21,7 +22,8 @@ data = pd.read_excel('uwezo_api/data/mapping.xlsx', engine = 'openpyxl', sheet_n
 
 data = data.rename(columns=lambda x: x if not 'Unnamed' in str(x) else '')\
     .dropna(axis = 0, how = 'all').dropna(axis = 1, how = 'all')\
-    .dropna(axis = 0, how = 'all').drop(index = 0)
+    .dropna(axis = 0, how = 'all').drop(index = 0)\
+    .rename(columns={'classification:type_stakeholder'})
 
 def coord(longitude, latitude):
     location = {
@@ -48,6 +50,18 @@ def transform_in_dict(website, email, phone, facebook, instagram):
               ]
     return contact
 
+data['type_stakeholder'] = data['type_stakeholder'].str.replace("&",",")
+mapping_classification = {
+    'Incubators, Accelerators and Hubs':'IAH',
+    'Professional Associations and Networks':'PAN',
+    'NGOs':'NGO',
+    'Development Agency':'DA',
+    'MFIs, Banks and Investors':'MBI',
+    'Local Consultants and Businesses':'LCB',
+    'Public Inititiaves':'PI'
+}
+data['classification'] = data['type_stakeholder'].map(mapping_classification)
+
 data['socialMedias'] = pd.Series(map(lambda a,b,c,d,e:transform_in_dict(a,b,c,d,e),
                                           data['website'],
                                           data['email'],
@@ -56,7 +70,7 @@ data['socialMedias'] = pd.Series(map(lambda a,b,c,d,e:transform_in_dict(a,b,c,d,
                                           data['instagram']
                                     ))
 data = data.fillna('').astype('object')
-data = data[['location','_id','locationName','socialMedias','country','sectors','name','email','website','classification', 'phone','instagram','facebook', 'womenSpecific', 'socialEntrepreneurSpecific', 'yearFounded', 'description', 'supportType', 'fundingType', 'innovationStages']]
+data = data[['location','_id','locationName','socialMedias','country','sectors','name','email','website','classification', 'type_stakeholder' 'phone','instagram','facebook', 'womenSpecific', 'socialEntrepreneurSpecific', 'yearFounded', 'description', 'supportType', 'fundingType', 'innovationStages']]
 
 
 
@@ -77,13 +91,13 @@ def predict_genre(stakeholder, womenspecific, socialentrepreneurship):
         # 'Access-Control-Allow-Origin':'http://127.0.0.1:5000/'
         # 'Access-Control-Allow-Origin':'http://localhost:3000/'
     }
-    stakeholders = ['Incubators, Accelerators & Hubs',
-            'Professional Associations & Networks',
-            'NGOs',
-            'Development Agency',
-            'MFIs, Banks, Investors'
-            'Local Consultants & Businesses',
-            'Public Inititiaves'
+    stakeholders = ['IAH',
+            'PAN',
+            'NGO',
+            'DA',
+            'MBI'
+            'LCB',
+            'PI'
     ]
 
     if stakeholder == 'All':
