@@ -22,7 +22,7 @@ data = pd.read_excel('uwezo_api/data/mapping.xlsx', engine = 'openpyxl', sheet_n
 
 data = data.rename(columns=lambda x: x if not 'Unnamed' in str(x) else '')\
     .dropna(axis = 0, how = 'all').dropna(axis = 1, how = 'all')\
-    .dropna(axis = 0, how = 'all').drop(index = 0)\
+    .dropna(axis = 0, how = 'all')\
     .rename(columns={'classification':'type_stakeholder'})
 
 def coord(longitude, latitude):
@@ -50,13 +50,13 @@ def transform_in_dict(website, email, phone, facebook, instagram):
               ]
     return contact
 
-data['type_stakeholder'] = data['type_stakeholder'].str.replace("&",",")
+data['type_stakeholder'] = data['type_stakeholder'].str.replace("&","and")
 mapping_classification = {
     'Incubators, Accelerators and Hubs':'IAH',
     'Professional Associations and Networks':'PAN',
     'NGOs':'NGO',
     'Development Agency':'DA',
-    'MFIs, Banks and Investors':'MBI',
+    'MFIs, Banks, Investors':'MBI',
     'Local Consultants and Businesses':'LCB',
     'Public Inititiaves':'PI'
 }
