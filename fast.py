@@ -23,7 +23,7 @@ data = pd.read_excel('uwezo_api/data/mapping.xlsx', engine = 'openpyxl', sheet_n
 data = data.rename(columns=lambda x: x if not 'Unnamed' in str(x) else '')\
     .dropna(axis = 0, how = 'all').dropna(axis = 1, how = 'all')\
     .dropna(axis = 0, how = 'all').drop(index = 0)\
-    .rename(columns={'classification:type_stakeholder'})
+    .rename(columns={'classification':'type_stakeholder'})
 
 def coord(longitude, latitude):
     location = {
@@ -70,7 +70,7 @@ data['socialMedias'] = pd.Series(map(lambda a,b,c,d,e:transform_in_dict(a,b,c,d,
                                           data['instagram']
                                     ))
 data = data.fillna('').astype('object')
-data = data[['location','_id','locationName','socialMedias','country','sectors','name','email','website','classification', 'type_stakeholder' 'phone','instagram','facebook', 'womenSpecific', 'socialEntrepreneurSpecific', 'yearFounded', 'description', 'supportType', 'fundingType', 'innovationStages']]
+data = data[['location','_id','locationName','socialMedias','country','sectors','name','email','website','classification', 'type_stakeholder', 'phone','instagram','facebook', 'womenSpecific', 'socialEntrepreneurSpecific', 'yearFounded', 'description', 'supportType', 'fundingType', 'innovationStages']]
 
 
 
