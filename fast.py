@@ -95,7 +95,7 @@ def predict_genre(stakeholder, womenspecific, socialentrepreneurship):
             'PAN',
             'NGO',
             'DA',
-            'MBI'
+            'MBI',
             'LCB',
             'PI'
     ]
